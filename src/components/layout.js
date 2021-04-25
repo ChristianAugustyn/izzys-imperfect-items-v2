@@ -24,14 +24,14 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div>
+      <div className="pt-8 px-8 md:px-0">
         <NavBar/>
-        <main>{children}</main>
-        <footer>
+        <main className='container mx-auto'>{children}</main>
+        {/* <footer>
           © {new Date().getFullYear()}
           {` `}
           Izzy's Imperfect Items
-        </footer>
+        </footer> */}
       </div>
     </>
   )
