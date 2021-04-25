@@ -8,6 +8,8 @@ html {
   -webkit-text-size-adjust: 100%;
   box-sizing: border-box;
   overflow-y: scroll;
+  height: 100vh;
+  width: 100%;
 }
 body {
   margin: 0;
@@ -22,7 +24,7 @@ body {
   -ms-font-feature-settings: "kern", "liga", "clig", "calt";
   -webkit-font-feature-settings: "kern", "liga", "clig", "calt";
   font-feature-settings: "kern", "liga", "clig", "calt";
-  min-width: 500px;
+  min-width: 300px;
 }
 article,
 aside,
