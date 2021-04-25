@@ -8,7 +8,7 @@
 import * as React from "react"
 import PropTypes from "prop-types"
 import { useStaticQuery, graphql } from "gatsby"
-import NavBar from './navbar/navbar'
+import NavBar from "./navbar/navbar"
 import "./layout.css"
 
 const Layout = ({ children }) => {
@@ -25,13 +25,13 @@ const Layout = ({ children }) => {
   return (
     <>
       <div className="pt-8 px-8 md:px-0">
-        <NavBar/>
-        <main className='container mx-auto'>{children}</main>
-        {/* <footer>
-          © {new Date().getFullYear()}
-          {` `}
-          Izzy's Imperfect Items
-        </footer> */}
+        <NavBar />
+        <main className="container mx-auto">{children}</main>
+        <footer className="absolute bottom-0 text-center pt-12 pb-3 w-full">
+          <p className="text-gray-400">
+            Copyright ⓒ {new Date().getFullYear()}{" "}{data.site.siteMetadata.title}
+          </p>
+        </footer>
       </div>
     </>
   )
