@@ -9,7 +9,7 @@ const NavBar = () => {
   const cartLength = 5
 
   return (
-    <div>
+    <div className='z-30'>
       <div className="container flex md:hidden flex-row justify-between">
         {/* cart button */}
         <div>
@@ -83,7 +83,7 @@ const NavBar = () => {
       {/* Navigation elements go here */}
       <nav>
         <div className="container mx-auto">
-          <ul className="hidden md:flex flex-row justify-center text-center">
+          <ul className="hidden md:flex flex-row justify-center text-center mb-4">
             <li className="px-4 purple-decoration">Home</li>
             {/* Drop down menu for the products */}
             <li className="px-4 purple-decoration">
@@ -93,10 +93,10 @@ const NavBar = () => {
                     <Transition
                       show={isHover}
                       as={Fragment}
-                      enter="transition ease-out duration-200"
+                      enter="transition ease-out duration-100"
                       enterFrom="opacity-0 translate-y-1"
                       enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-150"
+                      leave="transition ease-in duration-100"
                       leaveFrom="opacity-100 translate-y-0"
                       leaveTo="opacity-0 translate-y-1"
                     >
@@ -159,12 +159,13 @@ const NavBar = () => {
       {/* side nav on pop up */}
       <Transition
         show={isOpen}
-        enter="ease-in-out duration-300"
+        enter="ease-in-out duration-100"
         enterFrom="opacity-0"
         enterTo="opacity-100"
-        leave="ease-in-out duration-300"
+        leave="ease-in-out duration-100"
         leaveFrom="opacity-100"
         leaveTo="opacity-0"
+        className='z-20'
       >
         <div className="md:invisible z-20 absolute inset-0 flex flex-row-reverse item-start">
           {/* Side nav, Navigation */}

@@ -1,5 +1,6 @@
 import * as React from "react"
 import { Link } from "gatsby"
+import HeroCarousel from '../components/hero-carousel/hero-carousel'
 import { StaticImage } from "gatsby-plugin-image"
 
 import Layout from "../components/layout"
@@ -16,6 +17,7 @@ const IndexPage = () => (
       alt="A Gatsby astronaut"
       style={{ marginBottom: `1.45rem` }}
     /> */}
+    <HeroCarousel/>
 
   </Layout>
 )

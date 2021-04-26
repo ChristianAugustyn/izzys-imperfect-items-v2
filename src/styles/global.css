@@ -3,5 +3,5 @@
 @tailwind utilities;
 
 .purple-decoration:hover {
-    border-bottom: 2px solid #c394cd;   
+    border-bottom: 1px solid #c394cd;
 }
