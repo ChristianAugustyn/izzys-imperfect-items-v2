@@ -30,6 +30,7 @@ module.exports = {
     },
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-postcss`,
+    `netlify-plugin-gatsby-cache`,
     // {
     //   resolve: `gatsby-source-instagram`,
     //   options: {

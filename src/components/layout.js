@@ -26,7 +26,7 @@ const Layout = ({ children }) => {
     <>
       <div className="pt-8 px-8 md:px-0">
         <NavBar />
-        <main className="container mx-auto">{children}</main>
+        <main className="container mx-auto pb-20">{children}</main>
         <footer className="absolute bottom-0 text-center pt-12 pb-3 w-full">
           <p className="text-gray-400">
             Copyright ⓒ {new Date().getFullYear()}{" "}{data.site.siteMetadata.title}
