@@ -1,5 +1,6 @@
 import React, { useState } from "react"
 import Layout from "../components/layout"
+import ProductCard from '../components/product-card/product-card'
 import { graphql } from "gatsby"
 
 const Scrunchies = ({ data }) => {
@@ -11,12 +12,10 @@ const Scrunchies = ({ data }) => {
 
   return (
     <Layout>
-      <div className='flex flex-row flex-wrap'>
+      <div className='flex flex-wrap -m-4'>
           {
               scrunchies.map(s => (
-                  <div className='flex flex-col m-3 w-28 h-28 bg-blue-100'>
-                    {s.name}
-                  </div>
+                  <ProductCard product={s}/>
               ))
           }
       </div>
