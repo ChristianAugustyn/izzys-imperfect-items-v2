@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+.purple-decoration {
+    border-bottom: 1px solid #c394cd00;
+}
+
 .purple-decoration:hover {
     border-bottom: 1px solid #c394cd;
 }

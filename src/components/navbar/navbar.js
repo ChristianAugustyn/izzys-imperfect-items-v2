@@ -103,22 +103,22 @@ const NavBar = () => {
                     >
                       <Popover.Panel static className="absolute z-10 w-52">
                         <div className="grid grid-cols-1 border-solid rounded shadow-sm p-3 pt-0 mt-3 bg-purple-50 text-left">
-                          <a className="my-3" onClick={() => navigate(`/scrunchies`)}>
+                          <a className="my-3 cursor-pointer" onClick={() => navigate(`/scrunchies`)}>
                             Scrunchies
                           </a>
-                          <a href="#" className="my-3">
+                          <a className="my-3 cursor-pointer">
                             Specialty Scrunchies
                           </a>
-                          <a href="#" className="my-3">
+                          <a className="my-3 cursor-pointer">
                             Cutlery Pouches
                           </a>
-                          <a href="#" className="my-3">
+                          <a className="my-3 cursor-pointer">
                             Napkins
                           </a>
-                          <a href="#" className="my-3">
+                          <a className="my-3 cursor-pointer">
                             Face Masks
                           </a>
-                          <a href="#" className="my-3">
+                          <a className="my-3 cursor-pointer">
                             Bowl Cozies
                           </a>
                         </div>
