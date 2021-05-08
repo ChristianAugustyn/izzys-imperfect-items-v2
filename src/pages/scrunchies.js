@@ -12,7 +12,7 @@ const Scrunchies = ({ data }) => {
 
   return (
     <Layout>
-      <div className='flex flex-wrap -m-4'>
+      <div className='container mx-auto flex flex-wrap -m-4'>
           {
               scrunchies.map(s => (
                   <ProductCard product={s}/>

@@ -24,18 +24,17 @@ const HeroCarousel = () => {
         responsive={responsive}
         ssr={true} // means to render carousel on server-side.
         infinite={true}
-        autoPlay={true}
+        autoPlay={false}
         autoPlaySpeed={5000}
         keyBoardControl={true}
         transitionDuration={500}
         removeArrowOnDeviceType={["tablet", "mobile"]}
-        itemClass="carousel-item-padding-40-px"
-        className='z-0 rounded-md'
+        className='z-0 px-0'
       >
-        <div style={{backgroundImage: `url(${bg})`}} className='z-0 rounded-md bg-center bg-no-repeat bg-cover h-96'></div>
-        <div style={{backgroundImage: `url(${scrunchie})`}} className='z-0 rounded-md bg-center bg-no-repeat bg-cover bg-black bg-opacity-25 h-96'></div>
-        <div style={{backgroundImage: `url(${scrunchie_head})`}} className='z-0 rounded-md bg-center bg-no-repeat bg-cover bg-black bg-opacity-25 h-96'></div>
-        <div style={{backgroundImage: `url(${scrunchie_back})`}} className='z-0 rounded-md bg-center bg-no-repeat bg-cover bg-black bg-opacity-25 h-96'></div>
+        <div style={{backgroundImage: `url(${bg})`}} className='z-0 bg-center bg-no-repeat bg-cover h-96 w-full'></div>
+        <div style={{backgroundImage: `url(${scrunchie})`}} className='z-0 bg-center bg-no-repeat bg-cover bg-black bg-opacity-25 h-96'></div>
+        <div style={{backgroundImage: `url(${scrunchie_head})`}} className='z-0 bg-center bg-no-repeat bg-cover bg-black bg-opacity-25 h-96'></div>
+        <div style={{backgroundImage: `url(${scrunchie_back})`}} className='z-0 bg-center bg-no-repeat bg-cover bg-black bg-opacity-25 h-96'></div>
       </Carousel>
     </>
   )

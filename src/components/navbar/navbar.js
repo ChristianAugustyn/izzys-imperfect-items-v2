@@ -1,5 +1,6 @@
 import React, { useState, Fragment } from "react"
 import { Transition, Popover } from "@headlessui/react"
+import {navigate} from 'gatsby'
 import logo from "../../images/logo-b.png"
 
 const NavBar = () => {
@@ -9,8 +10,8 @@ const NavBar = () => {
   const cartLength = 5
 
   return (
-    <div className='z-30'>
-      <div className="container flex md:hidden flex-row justify-between">
+    <div className=' z-30'>
+      <div className="container px-7 flex md:hidden flex-row justify-between">
         {/* cart button */}
         <div>
           <button className="inline-flex">
@@ -84,7 +85,7 @@ const NavBar = () => {
       <nav>
         <div className="container mx-auto">
           <ul className="hidden md:flex flex-row justify-center text-center mb-4">
-            <li className="px-4 purple-decoration">Home</li>
+            <li className="px-4 purple-decoration" onClick={() => navigate(`/`)}>Home</li>
             {/* Drop down menu for the products */}
             <li className="px-4 purple-decoration">
               <Popover className="relative" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)}>
@@ -102,7 +103,7 @@ const NavBar = () => {
                     >
                       <Popover.Panel static className="absolute z-10 w-52">
                         <div className="grid grid-cols-1 border-solid rounded shadow-sm p-3 pt-0 mt-3 bg-purple-50 text-left">
-                          <a href="#" className="my-3">
+                          <a className="my-3" onClick={() => navigate(`/scrunchies`)}>
                             Scrunchies
                           </a>
                           <a href="#" className="my-3">

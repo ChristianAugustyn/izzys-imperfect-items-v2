@@ -24,12 +24,13 @@ const Layout = ({ children }) => {
 
   return (
     <>
-      <div className="pt-8 px-8 md:px-0">
+      <div className="pt-8 px-0">
         <NavBar />
-        <main className="container mx-auto pb-20">{children}</main>
-        <footer className="absolute bottom-0 text-center pt-12 pb-3 w-full">
+        <main className="pb-20">{children}</main>
+        <footer className="absolute bottom-0 right-0 left-0 text-center pt-12 pb-3">
           <p className="text-gray-400">
-            Copyright ⓒ {new Date().getFullYear()}{" "}{data.site.siteMetadata.title}
+            Copyright ⓒ {new Date().getFullYear()}{" "}
+            {data.site.siteMetadata.title}
           </p>
         </footer>
       </div>
