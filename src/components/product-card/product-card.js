@@ -21,7 +21,7 @@ const ProductCard = ({ product }) => {
             </h2>
             <p className="mt-1">${product.price.toFixed(2)}</p>
           </div>
-          <button className='text-xs bg-purple-200 p-2 h-10 hover:bg-purple-100'>ADD TO CART</button>
+
         </div>
       </div>
     </div>
