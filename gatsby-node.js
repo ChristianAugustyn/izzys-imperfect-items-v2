@@ -10,8 +10,8 @@ const lodash = require("lodash")
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 
 exports.createSchemaCustomization = ({ actions }) => {
-	const { createTypes } = actions
-	createTypes(`
+  const { createTypes } = actions
+  createTypes(`
 	  type Product implements Node {
 		mongoId: String
 		name: String,
@@ -22,14 +22,14 @@ exports.createSchemaCustomization = ({ actions }) => {
 		type: String
 	  }
 	`)
-  }
+}
 
 exports.sourceNodes = async ({
   actions: { createNode },
   createNodeId,
   createContentDigest,
 }) => {
-  const products = {
+  const products = await {
     scrunchies: await axios
       .get(`https://izzysimperfectitems.ca/api/scrunchies`)
       .then(res => res.data)
@@ -50,18 +50,14 @@ exports.sourceNodes = async ({
       .get(`https://izzysimperfectitems.ca/api/napkins`)
       .then(res => res.data)
       .catch(err => console.error(err)),
-    coasters: await axios
-      .get(`https://izzysimperfectitems.ca/api/coasters`)
-      .then(res => res.data)
-      .catch(err => console.error(err)),
     bowlCozies: await axios
       .get(`https://izzysimperfectitems.ca/api/bowl-cozies`)
       .then(res => res.data)
       .catch(err => console.error(err)),
   }
 
-Object.entries(products).forEach(([category, categoryProducts]) => {
-    categoryProducts.forEach(p => {
+  Object.entries(products).forEach(async ([category, categoryProducts]) => {
+    categoryProducts.forEach(async p => {
       const node = {
         id: createNodeId(`${category}-${p._id}`),
         mongoId: p._id,
@@ -75,7 +71,7 @@ Object.entries(products).forEach(([category, categoryProducts]) => {
           contentDigest: createContentDigest(p),
         },
       }
-      createNode(node) //creates the parent node
+      await createNode(node) //creates the parent node
     })
   })
 }
@@ -87,17 +83,22 @@ exports.onCreateNode = async ({
   cache,
   createNodeId,
 }) => {
-	console.log(node.img)
-  let imageNode = await createRemoteFileNode({
-    url: node.img,
-    parentNodeId: node.id,
-    createNode,
-    createNodeId,
-    cache,
-    store,
-  })
+  try {
+    if (node.internal.type === "Product") {
+      let imageNode = await createRemoteFileNode({
+        url: node.img,
+        parentNodeId: node.id,
+        createNode,
+        createNodeId,
+        cache,
+        store,
+      })
 
-  if (imageNode) {
-    node.imgNode___NODE = imageNode.id
+      if (imageNode) {
+        node.imgNode___NODE = imageNode.id
+      }
+    }
+  } catch (err) {
+    console.error(err)
   }
 }
