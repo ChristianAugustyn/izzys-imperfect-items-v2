@@ -24,7 +24,7 @@ const HeroCarousel = () => {
         responsive={responsive}
         ssr={true} // means to render carousel on server-side.
         infinite={true}
-        autoPlay={false}
+        autoPlay={true}
         autoPlaySpeed={5000}
         keyBoardControl={true}
         transitionDuration={500}

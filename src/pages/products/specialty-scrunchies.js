@@ -1,9 +1,9 @@
 import React, { useState } from "react"
-import Layout from "../components/layout"
-import ProductCard from "../components/product-card/product-card"
+import Layout from "../../components/layout"
+import ProductCard from "../../components/product-card/product-card"
 import { graphql } from "gatsby"
 
-const FaceMasks = ({ data }) => {
+const SpecialtyScrunchies = ({ data }) => {
   const {
     allProduct: { nodes },
   } = data
@@ -19,11 +19,11 @@ const FaceMasks = ({ data }) => {
   )
 }
 
-export default FaceMasks
+export default SpecialtyScrunchies
 
-export const faceMasksQuery = graphql`
+export const specialtyScrunchiesQuery = graphql`
   query {
-    allProduct(filter: {type: {eq: "fm"}}) {
+    allProduct(filter: {type: {eq: "bowScrunchie"}}) {
       nodes {
         id
         img

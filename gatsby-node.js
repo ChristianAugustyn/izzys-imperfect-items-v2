@@ -84,7 +84,7 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   try {
-    if (node.internal.type === "Product") {
+    if (node.internal.type === "Product") { //need this for typing prodducts
       let imageNode = await createRemoteFileNode({
         url: node.img,
         parentNodeId: node.id,

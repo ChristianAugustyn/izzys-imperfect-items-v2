@@ -1,6 +1,6 @@
-import React, { useState, Fragment } from "react"
+import React, { useState, Fragment, useEffect } from "react"
 import { Transition, Popover } from "@headlessui/react"
-import {navigate} from 'gatsby'
+import { navigate } from "gatsby"
 import logo from "../../images/logo-b.png"
 
 const NavBar = () => {
@@ -9,8 +9,14 @@ const NavBar = () => {
 
   const cartLength = 5
 
+  useEffect(() => {
+    if (!isOpen) {
+      setIsHover(false)
+    }
+  }, [isOpen])
+
   return (
-    <div className=' z-30'>
+    <div className=" z-30">
       <div className="container px-7 flex md:hidden flex-row justify-between">
         {/* cart button */}
         <div>
@@ -85,45 +91,73 @@ const NavBar = () => {
       <nav>
         <div className="container mx-auto">
           <ul className="hidden md:flex flex-row justify-center text-center mb-4">
-            <li className="px-4 purple-decoration cursor-pointer" onClick={() => navigate(`/`)}>Home</li>
+            <li
+              className="px-4 purple-decoration cursor-pointer"
+              onClick={() => navigate(`/`)}
+            >
+              Home
+            </li>
             {/* Drop down menu for the products */}
             <li className="px-4 purple-decoration">
-              <Popover className="relative" onMouseEnter={() => setIsHover(true)} onMouseLeave={() => setIsHover(false)} onClick={() => setIsHover(!isHover)}>
-                    <Popover.Button >Products</Popover.Button>
+              <Popover
+                className="relative"
+                onMouseEnter={() => setIsHover(true)}
+                onMouseLeave={() => setIsHover(false)}
+                onClick={() => setIsHover(!isHover)}
+              >
+                <Popover.Button>Products</Popover.Button>
 
-                    <Transition
-                      show={isHover}
-                      as={Fragment}
-                      enter="transition ease-out duration-100"
-                      enterFrom="opacity-0 translate-y-1"
-                      enterTo="opacity-100 translate-y-0"
-                      leave="transition ease-in duration-100"
-                      leaveFrom="opacity-100 translate-y-0"
-                      leaveTo="opacity-0 translate-y-1"
-                    >
-                      <Popover.Panel static className="absolute z-10 w-52">
-                        <div className="grid grid-cols-1 border-solid rounded shadow-sm p-3 pt-0 mt-3 bg-purple-50 text-left">
-                          <a className="my-3 cursor-pointer" onClick={() => navigate(`/scrunchies`)}>
-                            Scrunchies
-                          </a>
-                          <a className="my-3 cursor-pointer" onClick={() => navigate(`/specialty-scrunchies`)}>
-                            Specialty Scrunchies
-                          </a>
-                          <a className="my-3 cursor-pointer" onClick={() => navigate(`/cutlery-pouches`)}>
-                            Cutlery Pouches
-                          </a>
-                          <a className="my-3 cursor-pointer" onClick={() => navigate(`/napkins`)}>
-                            Napkins
-                          </a>
-                          <a className="my-3 cursor-pointer" onClick={() => navigate(`/face-masks`)}>
-                            Face Masks
-                          </a>
-                          <a className="my-3 cursor-pointer" onClick={() => navigate(`/bowl-cozies`)}>
-                            Bowl Cozies
-                          </a>
-                        </div>
-                      </Popover.Panel>
-                    </Transition>
+                <Transition
+                  show={isHover}
+                  as={Fragment}
+                  enter="transition ease-out duration-100"
+                  enterFrom="opacity-0 translate-y-1"
+                  enterTo="opacity-100 translate-y-0"
+                  leave="transition ease-in duration-100"
+                  leaveFrom="opacity-100 translate-y-0"
+                  leaveTo="opacity-0 translate-y-1"
+                >
+                  <Popover.Panel static className="absolute z-10 w-52">
+                    <div className="grid grid-cols-1 border-solid rounded shadow-sm p-3 pt-0 mt-3 bg-purple-50 text-left">
+                      <a
+                        className="my-3 cursor-pointer"
+                        onClick={() => navigate(`/products/scrunchies`)}
+                      >
+                        Scrunchies
+                      </a>
+                      <a
+                        className="my-3 cursor-pointer"
+                        onClick={() => navigate(`/products/specialty-scrunchies`)}
+                      >
+                        Specialty Scrunchies
+                      </a>
+                      <a
+                        className="my-3 cursor-pointer"
+                        onClick={() => navigate(`/products/cutlery-pouches`)}
+                      >
+                        Cutlery Pouches
+                      </a>
+                      <a
+                        className="my-3 cursor-pointer"
+                        onClick={() => navigate(`/products/napkins`)}
+                      >
+                        Napkins
+                      </a>
+                      <a
+                        className="my-3 cursor-pointer"
+                        onClick={() => navigate(`/products/face-masks`)}
+                      >
+                        Face Masks
+                      </a>
+                      <a
+                        className="my-3 cursor-pointer"
+                        onClick={() => navigate(`/products/bowl-cozies`)}
+                      >
+                        Bowl Cozies
+                      </a>
+                    </div>
+                  </Popover.Panel>
+                </Transition>
               </Popover>
             </li>
             <li className="px-4 purple-decoration">About</li>
@@ -161,16 +195,69 @@ const NavBar = () => {
       <div className={`${isOpen ? `block` : `hidden`}`}>
         <div className="md:invisible z-20 absolute inset-0 flex flex-row-reverse item-start">
           {/* Side nav, Navigation */}
-          <div className="z-40 w-64 h-full bg-white ">
+          <div
+            className={`z-40 w-64 h-full bg-white ${
+              isHover ? `hidden` : `block`
+            }`}
+          >
             <ul className="my-4">
-              <li className="pr-4">Home</li>
-              <li className="pr-4">Products</li>
-              <li className="pr-4">About</li>
-              <li className="pr-4">Contact</li>
-              <li className="pr-4">Questions</li>
+              <li className="pr-4 cursor-pointer" onClick={() => navigate("/")}>
+                Home
+              </li>
+              <li className="pr-4 cursor-pointer" onClick={() => setIsHover(true)}>
+                Products
+              </li>
+              <li className="pr-4 cursor-pointer">About</li>
+              <li className="pr-4 cursor-pointer">Contact</li>
+              <li className="pr-4 cursor-pointer">Questions</li>
             </ul>
           </div>
-          <button className="z-40 h-4" onClick={() => setIsOpen(false)}>
+          {/* side nav for the listed set of product categories */}
+          <div
+            className={`z-50 w-64 h-full bg-white ${
+              isHover ? `block` : `hidden`
+            }`}
+          >
+            <ul className="my-4">
+              <li
+                className="pr-4 cursor-pointer"
+                onClick={() => navigate("/products/scrunchies")}
+              >
+                Scrunchies
+              </li>
+              <li
+                className="pr-4 cursor-pointer"
+                onClick={() => navigate("/products/specialty-scrunchies")}
+              >
+                Specialty Scrunchies
+              </li>
+              <li
+                className="pr-4 cursor-pointer"
+                onClick={() => navigate("/products/cutlery-pouches")}
+              >
+                Cutlery Pouches
+              </li>
+              <li
+                className="pr-4 cursor-pointer"
+                onClick={() => navigate("/products/napkins")}
+              >
+                Napkins
+              </li>
+              <li
+                className="pr-4 cursor-pointer"
+                onClick={() => navigate("/products/face-masks")}
+              >
+                Face Masks
+              </li>
+              <li
+                className="pr-4 cursor-pointer"
+                onClick={() => navigate("/products/bowl-cozies")}
+              >
+                Bowl Cozies
+              </li>
+            </ul>
+          </div>
+          <button className="z-40 h-6" onClick={() => setIsOpen(false)}>
             <svg
               xmlns="http://www.w3.org/2000/svg"
               className="h-6 w-6"
@@ -191,7 +278,7 @@ const NavBar = () => {
             onClick={() => setIsOpen(false)}
           />
         </div>
-        </div>
+      </div>
     </div>
   )
 }
