@@ -1,16 +1,14 @@
 import React from "react"
+import { GatsbyImage, getImage } from "gatsby-plugin-image"
 
 const ProductCard = ({ product }) => {
+
+  const image = getImage(product.imgNode)
+
   return (
     <div className="w-1/2 lg:w-1/4 p-4">
       <div className="cursor-pointer">
-        <a className="block relative h-48 rounded">
-          <img
-            alt="ecommerce"
-            className="object-contain object-center w-full h-full block"
-            src={product.img}
-          />
-        </a>
+          <GatsbyImage image={image} constrained alt={product.name} className='w-full h-full'/>
         <div className="m-4 flex flex-row flex-nowrap justify-between content-center">
           <div>
             <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">

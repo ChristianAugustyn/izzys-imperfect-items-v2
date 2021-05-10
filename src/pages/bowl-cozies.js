@@ -5,13 +5,13 @@ import { graphql } from "gatsby"
 
 const BowlCozies = ({ data }) => {
   const {
-    allBowlCozy: { nodes: bowlCozies },
+    allProduct: { nodes },
   } = data
 
   return (
     <Layout>
       <div className="container mx-auto flex flex-wrap">
-        {bowlCozies.map(s => (
+        {nodes.map(s => (
             <ProductCard product={s} />
         ))}
       </div>
@@ -23,7 +23,7 @@ export default BowlCozies
 
 export const bowlCoziesQuery = graphql`
   query {
-    allBowlCozy {
+    allProduct(filter: {type: {eq: "bowlCozy"}}) {
       nodes {
         id
         img
@@ -32,6 +32,11 @@ export const bowlCoziesQuery = graphql`
         price
         quantity
         type
+        imgNode {
+          childImageSharp {
+            gatsbyImageData(width: 400, placeholder: BLURRED)
+          }
+        }
       }
     }
   }

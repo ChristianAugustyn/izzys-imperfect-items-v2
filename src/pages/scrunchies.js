@@ -5,16 +5,14 @@ import { graphql } from "gatsby"
 
 const Scrunchies = ({ data }) => {
   const {
-    allScrunchie: { nodes: scrunchies },
+    allProduct: { nodes },
   } = data
-
-  console.log(scrunchies)
 
   return (
     <Layout>
       <div className="container mx-auto flex flex-wrap">
-        {scrunchies.map(s => (
-            <ProductCard product={s} />
+        {nodes.map(s => (
+          <ProductCard product={s} />
         ))}
       </div>
     </Layout>
@@ -25,7 +23,7 @@ export default Scrunchies
 
 export const scrunchiesQuery = graphql`
   query {
-    allScrunchie {
+    allProduct(filter: { type: { eq: "scrunchie" } }) {
       nodes {
         id
         img
@@ -34,6 +32,14 @@ export const scrunchiesQuery = graphql`
         price
         quantity
         type
+        imgNode {
+          childImageSharp {
+            gatsbyImageData(
+              width: 400
+              placeholder: BLURRED
+            )
+          }
+        }
       }
     }
   }

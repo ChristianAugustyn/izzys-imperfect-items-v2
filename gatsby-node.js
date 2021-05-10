@@ -7,59 +7,97 @@
 // You can delete this file if you're not using it
 const axios = require("axios")
 const lodash = require("lodash")
+const { createRemoteFileNode } = require("gatsby-source-filesystem")
+
+exports.createSchemaCustomization = ({ actions }) => {
+	const { createTypes } = actions
+	createTypes(`
+	  type Product implements Node {
+		mongoId: String
+		name: String,
+		img: String
+		imgNode: File @link(from: "imgNode___NODE")
+		price: Float
+		quantity: Int
+		type: String
+	  }
+	`)
+  }
 
 exports.sourceNodes = async ({
-  actions,
+  actions: { createNode },
   createNodeId,
   createContentDigest,
 }) => {
-    const products = {
-      scrunchies: await axios
-        .get(`https://izzysimperfectitems.ca/api/scrunchies`)
-        .then(res => res.data)
-        .catch(err => console.error(err)),
-      bowScrunchies: await axios
-        .get(`https://izzysimperfectitems.ca/api/bow_scrunchies`)
-        .then(res => res.data)
-        .catch(err => console.error(err)),
-      cutleryPouches: await axios
-        .get(`https://izzysimperfectitems.ca/api/cutlery_pouches`)
-        .then(res => res.data)
-        .catch(err => console.error(err)),
-      faceMasks: await axios
-        .get(`https://izzysimperfectitems.ca/api/face_masks`)
-        .then(res => res.data)
-        .catch(err => console.error(err)),
-      napkins: await axios
-        .get(`https://izzysimperfectitems.ca/api/napkins`)
-        .then(res => res.data)
-        .catch(err => console.error(err)),
-      coasters: await axios
-        .get(`https://izzysimperfectitems.ca/api/coasters`)
-        .then(res => res.data)
-        .catch(err => console.error(err)),
-      bowlCozies: await axios
-        .get(`https://izzysimperfectitems.ca/api/bowl-cozies`)
-        .then(res => res.data)
-        .catch(err => console.error(err)),
-    }
+  const products = {
+    scrunchies: await axios
+      .get(`https://izzysimperfectitems.ca/api/scrunchies`)
+      .then(res => res.data)
+      .catch(err => console.error(err)),
+    bowScrunchies: await axios
+      .get(`https://izzysimperfectitems.ca/api/bow_scrunchies`)
+      .then(res => res.data)
+      .catch(err => console.error(err)),
+    cutleryPouches: await axios
+      .get(`https://izzysimperfectitems.ca/api/cutlery_pouches`)
+      .then(res => res.data)
+      .catch(err => console.error(err)),
+    faceMasks: await axios
+      .get(`https://izzysimperfectitems.ca/api/face_masks`)
+      .then(res => res.data)
+      .catch(err => console.error(err)),
+    napkins: await axios
+      .get(`https://izzysimperfectitems.ca/api/napkins`)
+      .then(res => res.data)
+      .catch(err => console.error(err)),
+    coasters: await axios
+      .get(`https://izzysimperfectitems.ca/api/coasters`)
+      .then(res => res.data)
+      .catch(err => console.error(err)),
+    bowlCozies: await axios
+      .get(`https://izzysimperfectitems.ca/api/bowl-cozies`)
+      .then(res => res.data)
+      .catch(err => console.error(err)),
+  }
 
-    await Object.entries(products).forEach(([ category, categoryProducts]) => {
-  	categoryProducts.forEach(p => {
-  		const node = {
-  			id: createNodeId(`${category}-${p._id}`),
-  			mongoId: p._id,
-  			name: p.name,
-  			img: p.img_url,
-  			price: p.price,
-  			quantity: p.quantity,
-  			type: lodash.camelCase(p.type),
-  			internal: {
-  			  type: lodash.camelCase(p.type),
-  			  contentDigest: createContentDigest(p),
-  			},
-  		  }
-  		  actions.createNode(node)
-  	  })
+Object.entries(products).forEach(([category, categoryProducts]) => {
+    categoryProducts.forEach(p => {
+      const node = {
+        id: createNodeId(`${category}-${p._id}`),
+        mongoId: p._id,
+        name: p.name,
+        img: p.img_url,
+        price: p.price,
+        quantity: p.quantity,
+        type: lodash.camelCase(p.type),
+        internal: {
+          type: `Product`,
+          contentDigest: createContentDigest(p),
+        },
+      }
+      createNode(node) //creates the parent node
     })
+  })
+}
+
+exports.onCreateNode = async ({
+  node,
+  actions: { createNode },
+  store,
+  cache,
+  createNodeId,
+}) => {
+	console.log(node.img)
+  let imageNode = await createRemoteFileNode({
+    url: node.img,
+    parentNodeId: node.id,
+    createNode,
+    createNodeId,
+    cache,
+    store,
+  })
+
+  if (imageNode) {
+    node.imgNode___NODE = imageNode.id
+  }
 }

@@ -5,13 +5,13 @@ import { graphql } from "gatsby"
 
 const CutleryPouches = ({ data }) => {
   const {
-    allCp: { nodes: cp },
+    allProduct: { nodes },
   } = data
 
   return (
     <Layout>
       <div className="container mx-auto flex flex-wrap">
-        {cp.map(s => (
+        {nodes.map(s => (
             <ProductCard product={s} />
         ))}
       </div>
@@ -23,7 +23,7 @@ export default CutleryPouches
 
 export const cutleryPouchesQuery = graphql`
   query {
-    allCp {
+    allProduct(filter: {type: {eq: "cp"}}) {
       nodes {
         id
         img
@@ -32,6 +32,11 @@ export const cutleryPouchesQuery = graphql`
         price
         quantity
         type
+        imgNode {
+          childImageSharp {
+            gatsbyImageData(width: 400, placeholder: BLURRED)
+          }
+        }
       }
     }
   }

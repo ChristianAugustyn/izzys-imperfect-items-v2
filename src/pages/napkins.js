@@ -5,13 +5,13 @@ import { graphql } from "gatsby"
 
 const Napkins = ({ data }) => {
   const {
-    allNp: { nodes: np },
+    allProduct: { nodes },
   } = data
 
   return (
     <Layout>
       <div className="container mx-auto flex flex-wrap">
-        {np.map(s => (
+        {nodes.map(s => (
             <ProductCard product={s} />
         ))}
       </div>
@@ -23,7 +23,7 @@ export default Napkins
 
 export const NapkinsQuery = graphql`
   query {
-    allNp {
+    allProduct(filter: {type: {eq: "np"}}) {
       nodes {
         id
         img
@@ -32,6 +32,11 @@ export const NapkinsQuery = graphql`
         price
         quantity
         type
+        imgNode {
+          childImageSharp {
+            gatsbyImageData(width: 400, placeholder: BLURRED)
+          }
+        }
       }
     }
   }

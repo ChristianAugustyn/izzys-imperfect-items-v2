@@ -5,13 +5,13 @@ import { graphql } from "gatsby"
 
 const FaceMasks = ({ data }) => {
   const {
-    allFm: { nodes: fm },
+    allProduct: { nodes },
   } = data
 
   return (
     <Layout>
       <div className="container mx-auto flex flex-wrap">
-        {fm.map(s => (
+        {nodes.map(s => (
             <ProductCard product={s} />
         ))}
       </div>
@@ -23,7 +23,7 @@ export default FaceMasks
 
 export const faceMasksQuery = graphql`
   query {
-    allFm {
+    allProduct(filter: {type: {eq: "fm"}}) {
       nodes {
         id
         img
@@ -32,6 +32,11 @@ export const faceMasksQuery = graphql`
         price
         quantity
         type
+        imgNode {
+          childImageSharp {
+            gatsbyImageData(width: 400, placeholder: BLURRED)
+          }
+        }
       }
     }
   }
