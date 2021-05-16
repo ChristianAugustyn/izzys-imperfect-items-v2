@@ -31,12 +31,19 @@ module.exports = {
     `gatsby-plugin-gatsby-cloud`,
     `gatsby-plugin-postcss`,
     `netlify-plugin-gatsby-cache`,
-    // {
-    //   resolve: `gatsby-source-instagram`,
-    //   options: {
-    //     username: `18172222678`
-    //   }
-    // }
+    {
+      resolve: `gatsby-source-instagram`,
+      options: {
+        username: `18172222678`
+      }
+    },
+    {
+      resolve: 'gatsby-plugin-tidio-chat',
+      options: {
+        tidioKey: 'ovmv4chohtuxfcayo2vpgbgybafknlic',
+        enableDuringDevelop: true, // Optional. Disables Tidio chat widget when running Gatsby dev server. Defaults to true.
+      },
+    },
     // this (optional) plugin enables Progressive Web App + Offline functionality
     // To learn more, visit: https://gatsby.dev/offline
     // `gatsby-plugin-offline`,
