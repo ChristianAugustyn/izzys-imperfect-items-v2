@@ -1,12 +1,13 @@
 import React from "react"
 import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import { navigate } from "gatsby"
 
 const ProductCard = ({ product }) => {
 
   const image = getImage(product.imgNode)
 
   return (
-    <div className="w-1/2 lg:w-1/4 p-4">
+    <div className="w-1/2 lg:w-1/4 p-4"  onClick={() => navigate(`/products/${product.type}/${product.id}`)}>
       <div className="cursor-pointer">
           <GatsbyImage image={image} constrained alt={product.name} className='w-full h-full'/>
         <div className="m-4 flex flex-row flex-nowrap justify-between content-center">

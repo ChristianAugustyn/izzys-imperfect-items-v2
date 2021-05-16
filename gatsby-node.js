@@ -8,6 +8,7 @@
 const axios = require("axios")
 const lodash = require("lodash")
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
+const path = require(`path`)
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
@@ -84,7 +85,8 @@ exports.onCreateNode = async ({
   createNodeId,
 }) => {
   try {
-    if (node.internal.type === "Product") { //need this for typing prodducts
+    if (node.internal.type === "Product") {
+      //need this for typing prodducts
       let imageNode = await createRemoteFileNode({
         url: node.img,
         parentNodeId: node.id,
@@ -101,4 +103,30 @@ exports.onCreateNode = async ({
   } catch (err) {
     console.error(err)
   }
+}
+
+exports.createPages = async ({ graphql, actions }) => {
+  const { createPage } = actions
+  const { data: { allProduct: { nodes: productNodes } } } = await graphql(`
+    query {
+      allProduct {
+        nodes {
+          name
+          mongoId
+          id
+          type
+        }
+      }
+    }
+  `);
+
+  productNodes.forEach(node => {
+    createPage({
+      path: `/products/${node.type}/${node.id}`,
+      component: path.resolve(`./src/templates/product-page.js`),
+      context: {
+        slug: `/products/${node.type}/${node.id}`, id: node.id
+      }
+    })
+  })
 }
