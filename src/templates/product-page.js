@@ -19,7 +19,7 @@ const ProductPage = ({ data }) => {
               <GatsbyImage image={image} class="lg:w-1/2 w-auto lg:h-auto h-full object-contain object-center rounded mx-auto" alt={product.name}/>
               <div class="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <h2 class="text-sm title-font text-gray-500 tracking-widest">
-                  {_.upperCase(product.type)}
+                  {_.upperCase(product.collection)}
                 </h2>
                 <h1 class="text-gray-900 text-3xl title-font font-medium mb-1">
                   {_.capitalize(product.name)}
@@ -168,12 +168,12 @@ export const productQuery = graphql`
   query($id: String!) {
     product(id: { eq: $id }) {
       id
-      img
-      mongoId
+      imgUrl
       name
       price
       quantity
       type
+      collection
       imgNode {
         childImageSharp {
           gatsbyImageData(width: 400, placeholder: BLURRED)

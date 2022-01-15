@@ -14,13 +14,16 @@ exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
   createTypes(`
 	  type Product implements Node {
-		mongoId: String
-		name: String,
-		img: String
-		imgNode: File @link(from: "imgNode___NODE")
-		price: Float
-		quantity: Int
-		type: String
+      id: String
+      name: String,
+      imgUrl: String
+      imgNode: File @link(from: "imgNode___NODE")
+      price: Float
+      quantity: Int
+      type: String,
+      sale: Float,
+      size: String,
+      collection: String
 	  }
 	`)
 }
@@ -30,53 +33,25 @@ exports.sourceNodes = async ({
   createNodeId,
   createContentDigest,
 }) => {
-  const products = await {
-    scrunchies: await axios
-      .get(`https://izzysimperfectitems.ca/api/scrunchies`)
-      .then(res => res.data)
-      .catch(err => console.error(err)),
-    bowScrunchies: await axios
-      .get(`https://izzysimperfectitems.ca/api/bow_scrunchies`)
-      .then(res => res.data)
-      .catch(err => console.error(err)),
-    cutleryPouches: await axios
-      .get(`https://izzysimperfectitems.ca/api/cutlery_pouches`)
-      .then(res => res.data)
-      .catch(err => console.error(err)),
-    faceMasks: await axios
-      .get(`https://izzysimperfectitems.ca/api/face_masks`)
-      .then(res => res.data)
-      .catch(err => console.error(err)),
-    napkins: await axios
-      .get(`https://izzysimperfectitems.ca/api/napkins`)
-      .then(res => res.data)
-      .catch(err => console.error(err)),
-    bowlCozies: await axios
-      .get(`https://izzysimperfectitems.ca/api/bowl-cozies`)
-      .then(res => res.data)
-      .catch(err => console.error(err)),
-  }
 
-  Object.entries(products).forEach(async ([category, categoryProducts]) => {
-    categoryProducts.forEach(async p => {
-      const node = {
-        id: createNodeId(`${category}-${p._id}`),
-        mongoId: p._id,
-        name: p.name,
-        img: p.img_url,
-        price: p.price,
-        quantity: p.quantity,
-        type: lodash.camelCase(p.type),
-        internal: {
-          type: `Product`,
-          contentDigest: createContentDigest(p),
-        },
+  const products = await axios.get('http://localhost:5000/api/product')
+    .then(res => res.data)
+    .catch(err => console.error(err))
+
+  products.forEach(p => {
+    const node = {
+      ...p,
+      internal: {
+        type: `Product`,
+        contentDigest: createContentDigest(p)
       }
-      await createNode(node) //creates the parent node
-    })
+    }
+    createNode(node)
   })
 }
 
+
+//creating image file nodes
 exports.onCreateNode = async ({
   node,
   actions: { createNode },
@@ -88,7 +63,7 @@ exports.onCreateNode = async ({
     if (node.internal.type === "Product") {
       //need this for typing prodducts
       let imageNode = await createRemoteFileNode({
-        url: node.img,
+        url: node.imgUrl,
         parentNodeId: node.id,
         createNode,
         createNodeId,
@@ -112,9 +87,8 @@ exports.createPages = async ({ graphql, actions }) => {
       allProduct {
         nodes {
           name
-          mongoId
           id
-          type
+          collection
         }
       }
     }
@@ -122,10 +96,10 @@ exports.createPages = async ({ graphql, actions }) => {
 
   productNodes.forEach(node => {
     createPage({
-      path: `/products/${node.type}/${node.id}`,
+      path: `/products/${node.collection}/${node.id}`,
       component: path.resolve(`./src/templates/product-page.js`),
       context: {
-        slug: `/products/${node.type}/${node.id}`, id: node.id
+        slug: `/products/${node.collection}/${node.id}`, id: node.id
       }
     })
   })

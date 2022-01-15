@@ -11,7 +11,7 @@ const Scrunchies = ({ data }) => {
   return (
     <Layout>
       <div className="container mx-auto flex flex-wrap">
-        {nodes.map(s => (
+        {nodes.filter(s => s.quantity > 0).map(s => (
           <ProductCard product={s}/>
         ))}
       </div>
@@ -26,11 +26,11 @@ export const scrunchiesQuery = graphql`
     allProduct(filter: { type: { eq: "scrunchie" } }) {
       nodes {
         id
-        img
-        mongoId
+        imgUrl
         name
         price
         quantity
+        collection
         type
         imgNode {
           childImageSharp {
