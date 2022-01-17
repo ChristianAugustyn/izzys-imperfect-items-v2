@@ -6,20 +6,25 @@ import Layout from "../components/layout"
 import { Product } from "../models/product"
 import axios from "axios"
 import Seo from "../components/seo"
+import BreadCrumb from "../components/breadcrumb"
 
 interface Props {
   data: {
     product: Product
+  },
+  pageContext: {
+    slug: string,
+    collection: string
   }
 }
 
-const ProductPage: FC<Props> = ({ data }) => {
+const ProductPage: FC<Props> = ({ data, pageContext }) => {
   const { product } = data
 
   const image = getImage(product.imgNode)
 
   useEffect(() => {
-    axios.get(`https://izzys-inventory-manager.herokuapp.com/api/product/${product.collection}/${product.id}`)
+    axios.get(`http://localhost:5000/api/product/${product.collection}/${product.id}`)
       .then(res => {
         console.log("GRABBED CURRENT INFO")
         console.log(res.data)
@@ -31,7 +36,8 @@ const ProductPage: FC<Props> = ({ data }) => {
       <Seo title={product.name} image={product.imgUrl} description={product.collection}/>
       <div className="container mx-auto flex flex-wrap">
         <section className="text-gray-600 body-font overflow-hidden">
-          <div className="container px-5 py-24 mx-auto">
+          <div className="container px-5 py-5 mx-auto">
+          <BreadCrumb path={pageContext.slug} className='px-5'/>
             <div className="lg:w-4/5 mx-auto flex flex-wrap">
               <GatsbyImage image={image} className="lg:w-1/2 w-auto lg:h-auto h-full object-contain object-center rounded mx-auto" alt={product.name}/>
               <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">

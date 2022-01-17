@@ -34,7 +34,7 @@ exports.sourceNodes = async ({
   createContentDigest,
 }) => {
 
-  const products = await axios.get('https://izzys-inventory-manager.herokuapp.com/api/product')
+  const products = await axios.get('http://localhost:5000/api/product')
     .then(res => res.data)
     .catch(err => console.error(err))
 
