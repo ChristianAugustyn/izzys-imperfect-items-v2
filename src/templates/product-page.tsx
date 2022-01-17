@@ -28,7 +28,7 @@ const ProductPage: FC<Props> = ({ data }) => {
 
   return (
     <Layout>
-      <Seo title={product.name} image={image} description={product.collection}/>
+      <Seo title={product.name} image={product.imgUrl} description={product.collection}/>
       <div className="container mx-auto flex flex-wrap">
         <section className="text-gray-600 body-font overflow-hidden">
           <div className="container px-5 py-24 mx-auto">
