@@ -1,15 +1,20 @@
-import React from "react"
-import { GatsbyImage, getImage } from "gatsby-plugin-image"
+import React, { FC } from "react"
+import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image"
 import { navigate } from "gatsby"
+import { Product } from '../../models/product'
 
-const ProductCard = ({ product }) => {
+interface Props {
+  product: Product
+}
 
-  const image = getImage(product.imgNode)
+const ProductCard: FC<Props> = ({ product }) => {
+
+  const image: IGatsbyImageData = getImage(product.imgNode)
 
   return (
     <div className="w-1/2 lg:w-1/4 p-4"  onClick={() => navigate(`/products/${product.collection}/${product.id}`)}>
       <div className="cursor-pointer">
-          <GatsbyImage image={image} constrained alt={product.name} className='w-full h-full'/>
+          <GatsbyImage image={image} alt={product.name} className='w-full h-full'/>
         <div className="m-4 flex flex-row flex-nowrap justify-between content-center">
           <div>
             <h3 className="text-gray-500 text-xs tracking-widest title-font mb-1 uppercase">

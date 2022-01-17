@@ -1,4 +1,6 @@
-interface Product {
+import { IGatsbyImageData } from "gatsby-plugin-image"
+
+export interface Product {
     id: string
     name: string
     imgUrl: string
@@ -8,4 +10,5 @@ interface Product {
     sale: number | null
     size: string | null
     collection: string
+    imgNode?: IGatsbyImageData
 }

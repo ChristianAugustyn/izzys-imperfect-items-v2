@@ -82,9 +82,10 @@ exports.onCreateNode = async ({
 
 exports.createPages = async ({ graphql, actions }) => {
   const { createPage } = actions
-  const { data: { allProduct: { nodes: productNodes } } } = await graphql(`
+  const { data: { allProduct: { nodes: productNodes, distinct: collections } } } = await graphql(`
     query {
       allProduct {
+        distinct(field: collection)
         nodes {
           name
           id
@@ -94,10 +95,23 @@ exports.createPages = async ({ graphql, actions }) => {
     }
   `);
 
+  //creates collection pages
+  collections.forEach(collection => {
+    createPage({
+      path: `/products/${collection}`,
+      component: path.resolve(`./src/templates/collection-page.tsx`),
+      context: {
+        slug: `/products/${collection}`,
+        collection: collection
+      }
+    })
+  })
+
+  //create product pages
   productNodes.forEach(node => {
     createPage({
       path: `/products/${node.collection}/${node.id}`,
-      component: path.resolve(`./src/templates/product-page.js`),
+      component: path.resolve(`./src/templates/product-page.tsx`),
       context: {
         slug: `/products/${node.collection}/${node.id}`, id: node.id
       }

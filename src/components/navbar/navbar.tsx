@@ -1,13 +1,24 @@
-import React, { useState, Fragment, useEffect } from "react"
+import React, { useState, Fragment, useEffect, FC } from "react"
 import { Transition, Popover } from "@headlessui/react"
-import { navigate } from "gatsby"
+import { graphql, navigate, useStaticQuery } from "gatsby"
 import logo from "../../images/logo-b.png"
+import _ from 'lodash'
 
-const NavBar = () => {
+const NavBar: FC = () => {
   const [isOpen, setIsOpen] = useState(false)
   const [isHover, setIsHover] = useState(false)
 
   const cartLength = 5
+
+  const {
+    allProduct: { distinct: collections },
+  } = useStaticQuery(graphql`
+    query {
+      allProduct {
+        distinct(field: collection)
+      }
+    }
+  `)
 
   useEffect(() => {
     if (!isOpen) {
@@ -119,42 +130,14 @@ const NavBar = () => {
                 >
                   <Popover.Panel static className="absolute z-10 w-52">
                     <div className="grid grid-cols-1 border-solid rounded shadow-sm p-3 pt-0 mt-3 bg-purple-50 text-left">
-                      <a
-                        className="my-3 cursor-pointer"
-                        onClick={() => navigate(`/products/scrunchies`)}
-                      >
-                        Scrunchies
-                      </a>
-                      <a
-                        className="my-3 cursor-pointer"
-                        onClick={() => navigate(`/products/specialty-scrunchies`)}
-                      >
-                        Specialty Scrunchies
-                      </a>
-                      <a
-                        className="my-3 cursor-pointer"
-                        onClick={() => navigate(`/products/cutlery-pouches`)}
-                      >
-                        Cutlery Pouches
-                      </a>
-                      <a
-                        className="my-3 cursor-pointer"
-                        onClick={() => navigate(`/products/napkins`)}
-                      >
-                        Napkins
-                      </a>
-                      <a
-                        className="my-3 cursor-pointer"
-                        onClick={() => navigate(`/products/face-masks`)}
-                      >
-                        Face Masks
-                      </a>
-                      <a
-                        className="my-3 cursor-pointer"
-                        onClick={() => navigate(`/products/bowl-cozies`)}
-                      >
-                        Bowl Cozies
-                      </a>
+                      {collections.map(c => (
+                        <a
+                          className="my-3 cursor-pointer"
+                          onClick={() => navigate(`/products/${c}`)}
+                        >
+                          {_.lowerCase(c)}
+                        </a>
+                      ))}
                     </div>
                   </Popover.Panel>
                 </Transition>
@@ -204,7 +187,10 @@ const NavBar = () => {
               <li className="pr-4 cursor-pointer" onClick={() => navigate("/")}>
                 Home
               </li>
-              <li className="pr-4 cursor-pointer" onClick={() => setIsHover(true)}>
+              <li
+                className="pr-4 cursor-pointer"
+                onClick={() => setIsHover(true)}
+              >
                 Products
               </li>
               <li className="pr-4 cursor-pointer">About</li>
@@ -219,42 +205,16 @@ const NavBar = () => {
             }`}
           >
             <ul className="my-4">
-              <li
-                className="pr-4 cursor-pointer"
-                onClick={() => navigate("/products/scrunchies")}
-              >
-                Scrunchies
-              </li>
-              <li
-                className="pr-4 cursor-pointer"
-                onClick={() => navigate("/products/specialty-scrunchies")}
-              >
-                Specialty Scrunchies
-              </li>
-              <li
-                className="pr-4 cursor-pointer"
-                onClick={() => navigate("/products/cutlery-pouches")}
-              >
-                Cutlery Pouches
-              </li>
-              <li
-                className="pr-4 cursor-pointer"
-                onClick={() => navigate("/products/napkins")}
-              >
-                Napkins
-              </li>
-              <li
-                className="pr-4 cursor-pointer"
-                onClick={() => navigate("/products/face-masks")}
-              >
-                Face Masks
-              </li>
-              <li
-                className="pr-4 cursor-pointer"
-                onClick={() => navigate("/products/bowl-cozies")}
-              >
-                Bowl Cozies
-              </li>
+              {
+                collections.map(c => (
+                  <li
+                    className="pr-4 cursor-pointer"
+                    onClick={() => navigate(`/products/${c}`)}
+                  >
+                    {_.lowerCase(c)}
+                  </li>
+                ))
+              }
             </ul>
           </div>
           <button className="z-40 h-6" onClick={() => setIsOpen(false)}>
