@@ -19,7 +19,7 @@ const ProductPage: FC<Props> = ({ data }) => {
   const image = getImage(product.imgNode)
 
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/product/${product.collection}/${product.id}`)
+    axios.get(`https://izzys-inventory-manager.herokuapp.com/api/product/${product.collection}/${product.id}`)
       .then(res => {
         console.log("GRABBED CURRENT INFO")
         console.log(res.data)
