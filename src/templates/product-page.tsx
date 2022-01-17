@@ -1,4 +1,4 @@
-import React, { FC, useEffect } from "react"
+import React, { FC, useEffect, useState } from "react"
 import { graphql } from "gatsby"
 import { GatsbyImage, getImage, IGatsbyImageData } from "gatsby-plugin-image"
 import _ from "lodash"
@@ -20,16 +20,18 @@ interface Props {
 
 const ProductPage: FC<Props> = ({ data, pageContext }) => {
   const { product } = data
-
   const image = getImage(product.imgNode)
 
+  const [currentProduct, setCurrentProduct] = useState<Product>(product)
+
   useEffect(() => {
-    axios.get(`http://localhost:5000/api/product/${product.collection}/${product.id}`)
+    axios.get(`https://izzys-inventory-manager.herokuapp.com/api/product/${product.collection}/${product.id}`)
       .then(res => {
-        console.log("GRABBED CURRENT INFO")
         console.log(res.data)
+        setCurrentProduct(res.data)
       })
-  })
+      .catch(err => console.error(err))
+  }, [])
 
   return (
     <Layout>
@@ -160,9 +162,20 @@ const ProductPage: FC<Props> = ({ data, pageContext }) => {
                   <span className="title-font font-medium text-2xl text-gray-900">
                     ${product.price.toFixed(2)}
                   </span>
-                  <button className="flex ml-auto text-white bg-izzy-purple border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
-                    ADD TO CART
-                  </button>
+                  {
+                    currentProduct.quantity > 0 ?
+                    (
+                      <button className="flex ml-auto text-white bg-izzy-purple border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+                        ADD TO CART
+                      </button>
+                    ) 
+                    :
+                    (
+                      <button className="flex ml-auto text-white bg-gray-500 border-0 py-2 px-6 focus:outline-none rounded">
+                        OUT OF STOCK
+                      </button>
+                    )
+                  }
                   <button className="rounded-full w-10 h-10 bg-gray-200 p-0 border-0 inline-flex items-center justify-center text-gray-500 ml-4">
                     <svg
                       fill="currentColor"
