@@ -32,7 +32,7 @@ const NavBar: FC = () => {
         {/* cart button */}
         <div>
           <button className="inline-flex">
-            <span class="relative inline-block">
+            <span className="relative inline-block">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 className="h-6 w-6"
@@ -48,7 +48,7 @@ const NavBar: FC = () => {
                 />
               </svg>
               <span
-                class={`${
+                className={`${
                   cartLength > 0 ? "absolute" : "hidden"
                 } top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full`}
               >
@@ -147,7 +147,7 @@ const NavBar: FC = () => {
             <li className="px-4 purple-decoration">Contact</li>
             <li className="px-4 purple-decoration">Questions</li>
             <li className="px-4 purple-decoration flex flex-row">
-              <span class="relative inline-block">
+              <span className="relative inline-block">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   className="h-6 w-6"
@@ -163,7 +163,7 @@ const NavBar: FC = () => {
                   />
                 </svg>
                 <span
-                  class={`${
+                  className={`${
                     cartLength > 0 ? "absolute" : "hidden"
                   } top-0 right-0 inline-flex items-center justify-center px-2 py-1 text-xs font-bold leading-none text-red-100 transform translate-x-1/2 -translate-y-1/2 bg-red-600 rounded-full`}
                 >
