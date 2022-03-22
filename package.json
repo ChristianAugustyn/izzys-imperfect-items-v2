@@ -4,13 +4,17 @@
   "description": "A green enterprise that takes pride in following a circular economy",
   "version": "0.1.0",
   "author": "Christian Augustyn <chrisaug@rogers.com>",
+  "peerDependencies": {
+    "gatsby": "^4.0.0"
+  },
   "dependencies": {
     "@headlessui/react": "^1.0.0",
     "autoprefixer": "^10.2.5",
-    "axios": "^0.21.1",
+    "axios": "^0.26.1",
     "cross-env": "^7.0.3",
-    "gatsby": "^3.3.1",
-    "gatsby-plugin-gatsby-cloud": "^2.2.0",
+    "dotenv": "^16.0.0",
+    "gatsby": "^4.10.1",
+    "gatsby-plugin-gatsby-cloud": "^4.11.0-next.2",
     "gatsby-plugin-image": "^1.4.1",
     "gatsby-plugin-manifest": "^3.2.0",
     "gatsby-plugin-offline": "^4.2.0",

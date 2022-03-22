@@ -41,7 +41,7 @@ const ProductPage: FC<Props> = ({ data, pageContext }) => {
           <div className="container px-5 py-5 mx-auto">
           <BreadCrumb path={pageContext.slug} className='px-5'/>
             <div className="lg:w-4/5 mx-auto flex flex-wrap">
-              <GatsbyImage image={image} className="lg:w-1/2 w-auto lg:h-auto h-full object-contain object-center rounded mx-auto" alt={product.name}/>
+              <GatsbyImage image={image} className="lg:w-1/2 w-500 lg:h-auto h-full object-contain object-center rounded mx-auto" alt={product.name}/>
               <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <h2 className="text-sm title-font text-gray-500 tracking-widest">
                   {_.upperCase(product.collection)}

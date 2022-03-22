@@ -1,14 +1,10 @@
-/**
- * Implement Gatsby's Node APIs in this file.
- *
- * See: https://www.gatsbyjs.com/docs/node-apis/
- */
-
-// You can delete this file if you're not using it
+require('dotenv').config();
 const axios = require("axios")
 const lodash = require("lodash")
 const { createRemoteFileNode } = require("gatsby-source-filesystem")
 const path = require(`path`)
+
+const { BASE_URL } = process.env;
 
 exports.createSchemaCustomization = ({ actions }) => {
   const { createTypes } = actions
@@ -17,7 +13,7 @@ exports.createSchemaCustomization = ({ actions }) => {
       id: String
       name: String,
       imgUrl: String
-      imgNode: File @link(from: "imgNode___NODE")
+      imgNode: File @link(from: "fields.imgNode")
       price: Float
       quantity: Int
       type: String,
@@ -34,7 +30,7 @@ exports.sourceNodes = async ({
   createContentDigest,
 }) => {
 
-  const products = await axios.get('https://izzys-inventory-manager.herokuapp.com/api/product')
+  const products = await axios.get(`${BASE_URL}/api/product`)
     .then(res => res.data)
     .catch(err => console.error(err))
 
@@ -54,25 +50,37 @@ exports.sourceNodes = async ({
 //creating image file nodes
 exports.onCreateNode = async ({
   node,
-  actions: { createNode },
+  actions: { createNode, createNodeField },
   store,
   cache,
-  createNodeId,
+  createNodeId
 }) => {
   try {
     if (node.internal.type === "Product") {
       //need this for typing prodducts
-      let imageNode = await createRemoteFileNode({
-        url: node.imgUrl,
-        parentNodeId: node.id,
-        createNode,
-        createNodeId,
-        cache,
-        store,
-      })
+      try {
+        let imageNode = await createRemoteFileNode({
+          url: node.imgUrl,
+          parentNodeId: node.id,
+          createNode,
+          createNodeId,
+          cache,
+          store,
+        })
 
-      if (imageNode) {
-        node.imgNode___NODE = imageNode.id
+        if (imageNode) {
+          //v3 way of adding reference to image node
+          // node.imgNode___NODE = imageNode.id
+
+          //v4 way of direct node mutation
+          createNodeField({
+            node,
+            name: 'imgNode',
+            value: imageNode.id
+          })
+        }
+      }catch(error) {
+        console.error(error)
       }
     }
   } catch (err) {
